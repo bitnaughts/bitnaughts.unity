@@ -4,53 +4,42 @@ import io
 import os
 import sys
 
-repos_url = "https://api.github.com/users/"
-repo_zip_url = "https://github.com/"
+REPO_URLS = ['https://github.com/bitnaughts/csharp.interpreter', 'https://github.com/bitnaughts/interpreter.tester',
+             'https://github.com/bitnaughts/bitnaughts', 'https://github.com/bitnaughts/mips.interpreter']
 
-def getRepos(username=None):
-    print ("Getting repository list")
-    try:
-        url = repos_url + username + "/repos"
-        response = requests.get(url)
-        repos = response.json()
-        return repos
-    except Exception as e:
-        print (e)
-   
-def saveRepos(username, repos=None):
-    if repos:
-        abspath = os.path.abspath(sys.path[0])
-        dname = os.path.dirname(abspath + '/bitnaughts/Assets/')
-        print (dname)
-        os.chdir(dname)
+
+def getRepos():
+    if REPO_URLS:
+        # Look into Python environment independent way to achieve directory changes.
+        # Alternatively, if the user has any issues, have the init.py file placed inside of /bitnaughts/Assets/ and omit the directory change (Lines 15-17).
+        abs_path = os.path.abspath(sys.path[0])
+        d_name = os.path.dirname(abs_path + '/bitnaughts/Assets/')
+        os.chdir(d_name)
         try:
-            repo_number = 1
-            for repo in repos:
-                reponame = repo["name"]
-                print (str(repo_number) + " " + reponame + " downloading....")
-                repozipurl = repo_zip_url + username + "/" + reponame + "/archive/master.zip"
-                get_repo_zip = requests.get(repozipurl)
-                repozipfile = zipfile.ZipFile(io.BytesIO(get_repo_zip.content))
-                print ("\tExtracting " + reponame + "....")
-                repozipfile.extractall()
-                print ("\t" + reponame + "downloading Complete :)")
-                repo_number += 1
+            for repo in REPO_URLS:
+                print("DOWNLOADING:" + " " + repo)
+                repo_zip_url = repo + "/archive/master.zip"
+                get_repo_zip = requests.get(repo_zip_url)
+                repo_zip_file = zipfile.ZipFile(
+                    io.BytesIO(get_repo_zip.content))
+                print("\tEXTRACTING " + repo + "....")
+                repo_zip_file.extractall()
+                print("\tDONE")
             return True
         except Exception as e:
-            print (e)
+            print(e)
             return False
     else:
-        return "Don't have any repositories"
+        return "No repositories for download."
 
 
 def main():
-    username = 'bitnaughts'
-    repos = getRepos(username)
-    status = saveRepos(username=username, repos=repos)
+    status = getRepos()
     if status:
-        print ("Done")
+        print("You're all set!")
     else:
-        print ("Something went wrong :(")
+        print("Something went wrong.")
+
 
 if __name__ == "__main__":
     main()
