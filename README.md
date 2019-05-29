@@ -1,4 +1,4 @@
-![image](images/banner.png)
+![image](https://github.com/bitnaughts/bitnaughts.assets/blob/master/images/banner.png)
 
 # BitNaughts Unity Project
 
