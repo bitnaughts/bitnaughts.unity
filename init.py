@@ -4,7 +4,7 @@ import io
 import os
 import sys
 
-REPO_URLS = ['https://github.com/bitnaughts/csharp.interpreter', 'https://github.com/bitnaughts/interpreter.tester',
+REPO_URLS = ['https://github.com/bitnaughts/csharp.interpreter',
              'https://github.com/bitnaughts/bitnaughts', 'https://github.com/bitnaughts/mips.interpreter']
 
 
