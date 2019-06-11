@@ -6,7 +6,7 @@ Interested in setting up the BitNaughts development environment? You're at the r
 
 ## Prerequisites
 
-- [Unity 2018.4.0f1.exe](https://download.unity3d.com/download_unity/b6ffa8986c8d/Windows64EditorInstaller/UnitySetup64-2018.4.0f1.exe?_ga=2.126853581.1368034446.1560221342-1747770899.1559956949)
+- [Unity 2018.4.2f1.exe](https://download.unity3d.com/download_unity/d6fb3630ea75/UnityDownloadAssistant-2018.4.2f1.exe?_ga=2.197447151.1368034446.1560221342-1747770899.1559956949)
   - [More download options here](https://unity3d.com/unity/qa/lts-releases)
 
 ## Installation
