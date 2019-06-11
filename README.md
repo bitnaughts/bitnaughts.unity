@@ -11,17 +11,17 @@ Interested in setting up the BitNaughts development environment? You're at the r
 
 ## Installation
 
-First, clone this repository into a folder of your preference:
+First, clone this repository and enter it:
 
 ```bash
 git clone https://github.com/bitnaughts/bitnaughts.unity.git
 cd bitnaughts.unity
 ```
 
-and run the shell script to install the various BitNaughts modules:
+then, run the shell script to install the various BitNaughts modules:
 
 ```bash
 ./init.sh
 ```
 
-You're all set! Load a scene in ```bitnaughts/Assets/BitNaughts/Scenes/``` and mess around!
+You're all set! Load a scene in ```bitnaughts/Assets/bitnaughts/Scenes/``` and mess around!
