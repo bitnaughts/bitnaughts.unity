@@ -3,4 +3,10 @@ bitnaughts/\.DS_Store
 
 bitnaughts/Assets/\.DS_Store
 
+bitnaughts/Library/
+
+bitnaughts/Logs/
+
+bitnaughts/Temp/
+
 \.DS_Store
