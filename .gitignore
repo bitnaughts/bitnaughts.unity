@@ -3,3 +3,11 @@ Logs/
 Library/
 Temp/
 \.DS_Store
+Assets/bitnaughts.assets.meta
+Assets/bitnaughts.assets/
+Assets/bitnaughts.meta
+Assets/bitnaughts.ui.ux.meta
+Assets/bitnaughts.ui.ux/
+Assets/bitnaughts/
+Assets/csharp.interpreter.meta
+Assets/csharp.interpreter/
