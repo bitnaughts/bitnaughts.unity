@@ -1,4 +1,0 @@
-sceneSetups:
-- path: Assets/bitnaughts/Scenes/Overview.unity
-  isLoaded: 1
-  isActive: 1

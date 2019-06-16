@@ -1,7 +1,5 @@
-bitnaughts/\.DS_Store
-bitnaughts/Assets/\.DS_Store
-bitnaughts/Logs/
-bitnaughts/Library/
-bitnaughts/Temp/
+Assets/\.DS_Store
+Logs/
+Library/
+Temp/
 \.DS_Store
-
