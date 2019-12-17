@@ -5,6 +5,12 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
+  - enabled: 1
+    path: Assets/bitnaughts/Scenes/Overview.unity
+    guid: 1c89fb1f0b113c54797e839a2577aab5
+  - enabled: 1
+    path: Assets/bitnaughts/Scenes/System.unity
+    guid: ed38f9a075da1cb4cbf4c1d9807c79e7
   - enabled: 0
     path: 
     guid: 00000000000000000000000000000000
