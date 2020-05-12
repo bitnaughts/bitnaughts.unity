@@ -11,10 +11,10 @@
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <RootNamespace></RootNamespace>
-    <ProjectGuid>{3921FEED-CAEC-6D96-91E2-2A664A997150}</ProjectGuid>
+    <ProjectGuid>{351DB1C0-6C09-A9F5-8BA5-1B276618044A}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <AssemblyName>Assembly-CSharp</AssemblyName>
+    <AssemblyName>UnityAsync</AssemblyName>
     <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <BaseDirectory>.</BaseDirectory>
@@ -55,158 +55,33 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\bitnaughts.multiplayer\Controllers\MultiplayerTesting.cs" />
-     <Compile Include="Assets\bitnaughts.multiplayer\Hub\ChatSampleHub.cs" />
-     <Compile Include="Assets\bitnaughts.multiplayer\Program.cs" />
-     <Compile Include="Assets\bitnaughts.multiplayer\Startup.cs" />
-     <Compile Include="Assets\bitnaughts.ui.ux\ConsoleManager.cs" />
-     <Compile Include="Assets\bitnaughts.ui.ux\ConsoleObject.cs" />
-     <Compile Include="Assets\bitnaughts.ui.ux\Controllers\CanvasController.cs" />
-     <Compile Include="Assets\bitnaughts.ui.ux\Controllers\InteractionController.cs" />
-     <Compile Include="Assets\bitnaughts.ui.ux\Objects\Panels.cs" />
-     <Compile Include="Assets\bitnaughts.ui.ux\UIBannerManager.cs" />
-     <Compile Include="Assets\bitnaughts.ui.ux\UIManager.cs" />
-     <Compile Include="Assets\bitnaughts.ui.ux\UIPanel.cs" />
-     <Compile Include="Assets\bitnaughts.ui.ux\UIRectangle.cs" />
-     <Compile Include="Assets\bitnaughts.ui.ux\UIStyle.cs" />
-     <Compile Include="Assets\bitnaughts.world\Constants\Galaxy.cs" />
-     <Compile Include="Assets\bitnaughts.world\Controllers\Controller.cs" />
-     <Compile Include="Assets\bitnaughts.world\Controllers\GalaxyController.cs" />
-     <Compile Include="Assets\bitnaughts.world\Controllers\Modules\CannonController.cs" />
-     <Compile Include="Assets\bitnaughts.world\Controllers\Modules\GimbalController.cs" />
-     <Compile Include="Assets\bitnaughts.world\Controllers\Modules\MainframeController.cs" />
-     <Compile Include="Assets\bitnaughts.world\Controllers\Modules\ModuleController.cs" />
-     <Compile Include="Assets\bitnaughts.world\Controllers\Modules\PrinterController.cs" />
-     <Compile Include="Assets\bitnaughts.world\Controllers\Modules\ProjectileController.cs" />
-     <Compile Include="Assets\bitnaughts.world\Controllers\Modules\SensorController.cs" />
-     <Compile Include="Assets\bitnaughts.world\Controllers\ShipController.cs" />
-     <Compile Include="Assets\bitnaughts.world\Controllers\SystemController.cs" />
-     <Compile Include="Assets\bitnaughts.world\Objects\Bodies.cs" />
-     <Compile Include="Assets\bitnaughts.world\Objects\Modules.cs" />
-     <Compile Include="Assets\bitnaughts\Constants\Audio.cs" />
-     <Compile Include="Assets\bitnaughts\Constants\Camera.cs" />
-     <Compile Include="Assets\bitnaughts\Constants\Galaxy.cs" />
-     <Compile Include="Assets\bitnaughts\Constants\HTTP.cs" />
-     <Compile Include="Assets\bitnaughts\Constants\Text.cs" />
-     <Compile Include="Assets\bitnaughts\Controllers\AnimationController.cs" />
-     <Compile Include="Assets\bitnaughts\Controllers\AudioController.cs" />
-     <Compile Include="Assets\bitnaughts\Controllers\CameraController.cs" />
-     <Compile Include="Assets\bitnaughts\Controllers\Controller.cs" />
-     <Compile Include="Assets\bitnaughts\Controllers\Database.cs" />
-     <Compile Include="Assets\bitnaughts\Controllers\GalaxyController.cs" />
-     <Compile Include="Assets\bitnaughts\Controllers\Modules\CannonController.cs" />
-     <Compile Include="Assets\bitnaughts\Controllers\Modules\GimbalController.cs" />
-     <Compile Include="Assets\bitnaughts\Controllers\Modules\MainframeController.cs" />
-     <Compile Include="Assets\bitnaughts\Controllers\Modules\ModuleController.cs" />
-     <Compile Include="Assets\bitnaughts\Controllers\Modules\PrinterController.cs" />
-     <Compile Include="Assets\bitnaughts\Controllers\Modules\ProjectileController.cs" />
-     <Compile Include="Assets\bitnaughts\Controllers\Modules\SensorController.cs" />
-     <Compile Include="Assets\bitnaughts\Controllers\PrefabController.cs" />
-     <Compile Include="Assets\bitnaughts\Controllers\ShipController.cs" />
-     <Compile Include="Assets\bitnaughts\Controllers\SystemController.cs" />
-     <Compile Include="Assets\bitnaughts\Controllers\TextController.cs" />
-     <Compile Include="Assets\bitnaughts\FogOfWar\Controller.cs" />
-     <Compile Include="Assets\bitnaughts\FogOfWar\FieldOfView.cs" />
-     <Compile Include="Assets\bitnaughts\FogOfWar\FogOfWar.cs" />
-     <Compile Include="Assets\bitnaughts\Handlers\ColorHandler.cs" />
-     <Compile Include="Assets\bitnaughts\Handlers\ConversionHandler.cs" />
-     <Compile Include="Assets\bitnaughts\Handlers\JSONHandler.cs" />
-     <Compile Include="Assets\bitnaughts\Handlers\MotionHandler.cs" />
-     <Compile Include="Assets\bitnaughts\Handlers\RandomHandler.cs" />
-     <Compile Include="Assets\bitnaughts\Main.cs" />
-     <Compile Include="Assets\bitnaughts\Objects\Bodies.cs" />
-     <Compile Include="Assets\bitnaughts\Objects\Modules.cs" />
-     <Compile Include="Assets\bitnaughts\Objects\Tuples.cs" />
-     <Compile Include="Assets\bitnaughts\Scenes\Referencer.cs" />
-     <Compile Include="Assets\bitnaughts\Scenes\ReferencerManager.cs" />
-     <Compile Include="Assets\bitnaughts\SimpleFlier.cs" />
-     <Compile Include="Assets\csharp.interpreter\Constants\Classes.cs" />
-     <Compile Include="Assets\csharp.interpreter\Constants\Console.cs" />
-     <Compile Include="Assets\csharp.interpreter\Constants\Keywords.cs" />
-     <Compile Include="Assets\csharp.interpreter\Constants\Operators.cs" />
-     <Compile Include="Assets\csharp.interpreter\Constants\Plotter.cs" />
-     <Compile Include="Assets\csharp.interpreter\Constants\Templates.cs" />
-     <Compile Include="Assets\csharp.interpreter\Evaluator.cs" />
-     <Compile Include="Assets\csharp.interpreter\Formatter.cs" />
-     <Compile Include="Assets\csharp.interpreter\Handlers\CompilerHandler.cs" />
-     <Compile Include="Assets\csharp.interpreter\Handlers\FunctionHandler.cs" />
-     <Compile Include="Assets\csharp.interpreter\Handlers\HashManager.cs" />
-     <Compile Include="Assets\csharp.interpreter\Handlers\ListenerHandler.cs" />
-     <Compile Include="Assets\csharp.interpreter\Handlers\Logger.cs" />
-     <Compile Include="Assets\csharp.interpreter\Handlers\ScopeHandler.cs" />
-     <Compile Include="Assets\csharp.interpreter\Handlers\SubstringHandler.cs" />
-     <Compile Include="Assets\csharp.interpreter\Handlers\TemplateHandler.cs" />
-     <Compile Include="Assets\csharp.interpreter\Handlers\VariableHandler.cs" />
-     <Compile Include="Assets\csharp.interpreter\Interpreter.cs" />
-     <Compile Include="Assets\csharp.interpreter\Objects\FunctionObject.cs" />
-     <Compile Include="Assets\csharp.interpreter\Objects\ProcessorObject.cs" />
-     <Compile Include="Assets\csharp.interpreter\Objects\RangeObject.cs" />
-     <Compile Include="Assets\csharp.interpreter\Objects\ScopeObject.cs" />
-     <Compile Include="Assets\csharp.interpreter\Objects\ScriptObject.cs" />
-     <Compile Include="Assets\csharp.interpreter\Objects\VariableObject.cs" />
-     <Compile Include="Assets\csharp.interpreter\Parser.cs" />
-     <None Include="Assets\bitnaughts\Handlers\log.txt" />
-     <None Include="Assets\bitnaughts\Notes\Weapons.txt" />
-     <None Include="Assets\bitnaughts.assets\Unused\descriptions.txt" />
-     <None Include="Assets\bitnaughts.assets\Unused\Notes\Hardpoints.txt" />
-     <None Include="Assets\bitnaughts.assets\Materials\Ship\Sprites-Default.shader" />
-     <None Include="Assets\bitnaughts\FogOfWar\StencilMask.shader" />
-     <None Include="Assets\bitnaughts\Notes\Notes.txt" />
-     <None Include="Assets\bitnaughts.assets\Materials\Ship\Sprites-Mask.shader" />
-     <None Include="Assets\bitnaughts.assets\Resources\script.txt" />
-     <None Include="Assets\bitnaughts\Notes\Hardpoints.txt" />
-     <None Include="Assets\bitnaughts.assets\Materials\Ship\Sprites-Diffuse.shader" />
-     <None Include="Assets\bitnaughts\FogOfWar\StencilObject.shader" />
-     <None Include="Assets\bitnaughts.assets\Resources\descriptions.txt" />
-     <None Include="Assets\bitnaughts\Handlers\log.txt.txt" />
-     <None Include="Assets\bitnaughts.assets\Unused\Notes\Weapons.txt" />
- <Reference Include="Unity.Timeline.Editor">
- <HintPath>E:/Projects/bitnaughts.unity/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
- </Reference>
- <Reference Include="com.unity.multiplayer-hlapi.Editor">
- <HintPath>E:/Projects/bitnaughts.unity/Library/ScriptAssemblies/com.unity.multiplayer-hlapi.Editor.dll</HintPath>
- </Reference>
- <Reference Include="Unity.VSCode.Editor">
- <HintPath>E:/Projects/bitnaughts.unity/Library/ScriptAssemblies/Unity.VSCode.Editor.dll</HintPath>
- </Reference>
- <Reference Include="UnityEngine.UI">
- <HintPath>E:/Projects/bitnaughts.unity/Library/ScriptAssemblies/UnityEngine.UI.dll</HintPath>
- </Reference>
- <Reference Include="Unity.Timeline">
- <HintPath>E:/Projects/bitnaughts.unity/Library/ScriptAssemblies/Unity.Timeline.dll</HintPath>
- </Reference>
- <Reference Include="Unity.CollabProxy.Editor">
- <HintPath>E:/Projects/bitnaughts.unity/Library/ScriptAssemblies/Unity.CollabProxy.Editor.dll</HintPath>
- </Reference>
- <Reference Include="com.unity.multiplayer-weaver.Editor">
- <HintPath>E:/Projects/bitnaughts.unity/Library/ScriptAssemblies/com.unity.multiplayer-weaver.Editor.dll</HintPath>
- </Reference>
- <Reference Include="UnityEngine.XR.LegacyInputHelpers">
- <HintPath>E:/Projects/bitnaughts.unity/Library/ScriptAssemblies/UnityEngine.XR.LegacyInputHelpers.dll</HintPath>
- </Reference>
- <Reference Include="Unity.Rider.Editor">
- <HintPath>E:/Projects/bitnaughts.unity/Library/ScriptAssemblies/Unity.Rider.Editor.dll</HintPath>
- </Reference>
- <Reference Include="Unity.2D.Sprite.Editor">
- <HintPath>E:/Projects/bitnaughts.unity/Library/ScriptAssemblies/Unity.2D.Sprite.Editor.dll</HintPath>
- </Reference>
- <Reference Include="Unity.2D.Tilemap.Editor">
- <HintPath>E:/Projects/bitnaughts.unity/Library/ScriptAssemblies/Unity.2D.Tilemap.Editor.dll</HintPath>
- </Reference>
- <Reference Include="UnityEditor.SpatialTracking">
- <HintPath>E:/Projects/bitnaughts.unity/Library/ScriptAssemblies/UnityEditor.SpatialTracking.dll</HintPath>
- </Reference>
- <Reference Include="UnityEngine.SpatialTracking">
- <HintPath>E:/Projects/bitnaughts.unity/Library/ScriptAssemblies/UnityEngine.SpatialTracking.dll</HintPath>
- </Reference>
- <Reference Include="UnityEditor.XR.LegacyInputHelpers">
- <HintPath>E:/Projects/bitnaughts.unity/Library/ScriptAssemblies/UnityEditor.XR.LegacyInputHelpers.dll</HintPath>
- </Reference>
+     <Compile Include="Assets\unity.async\Await\Await.cs" />
+     <Compile Include="Assets\unity.async\AwaitInstructionAwaiter.cs" />
+     <Compile Include="Assets\unity.async\AwaitInstructions\WaitForFrames.cs" />
+     <Compile Include="Assets\unity.async\AwaitInstructions\WaitForSeconds.cs" />
+     <Compile Include="Assets\unity.async\AwaitInstructions\WaitForSecondsRealtime.cs" />
+     <Compile Include="Assets\unity.async\AwaitInstructions\WaitUntil.cs" />
+     <Compile Include="Assets\unity.async\AwaitInstructions\WaitUntil`T.cs" />
+     <Compile Include="Assets\unity.async\AwaitInstructions\WaitWhile.cs" />
+     <Compile Include="Assets\unity.async\AwaitInstructions\WaitWhile`T.cs" />
+     <Compile Include="Assets\unity.async\Awaiters\AsyncOperationAwaiter.cs" />
+     <Compile Include="Assets\unity.async\Awaiters\IEnumeratorAwaiter.cs" />
+     <Compile Include="Assets\unity.async\Awaiters\ResourceRequestAwaiter.cs" />
+     <Compile Include="Assets\unity.async\Awaiters\SynchronizationContextAwaiter.cs" />
+     <Compile Include="Assets\unity.async\Awaiters\YieldInstructionAwaiter.cs" />
+     <Compile Include="Assets\unity.async\Extensions.cs" />
+     <Compile Include="Assets\unity.async\IAwaitInstruction.cs" />
+     <Compile Include="Assets\unity.async\Manager\AsyncManager.ContinuationProcessorGroup.ContinuationProcessor.cs" />
+     <Compile Include="Assets\unity.async\Manager\AsyncManager.ContinuationProcessorGroup.cs" />
+     <Compile Include="Assets\unity.async\Manager\AsyncManager.cs" />
+     <Compile Include="Assets\unity.async\ReflectionUtility.cs" />
+     <Compile Include="Assets\unity.async\TaskYieldInstruction.cs" />
+     <Compile Include="Assets\unity.async\Testing\Tests.cs" />
  <Reference Include="UnityEditor.UI">
  <HintPath>E:/Projects/bitnaughts.unity/Library/ScriptAssemblies/UnityEditor.UI.dll</HintPath>
  </Reference>
- <Reference Include="com.unity.multiplayer-hlapi.Runtime">
- <HintPath>E:/Projects/bitnaughts.unity/Library/ScriptAssemblies/com.unity.multiplayer-hlapi.Runtime.dll</HintPath>
+ <Reference Include="UnityEngine.UI">
+ <HintPath>E:/Projects/bitnaughts.unity/Library/ScriptAssemblies/UnityEngine.UI.dll</HintPath>
  </Reference>
  <Reference Include="UnityEngine.AIModule">
  <HintPath>C:/Program Files/Unity/Hub/Editor/2019.3.8f1/Editor/Data/Managed/UnityEngine/UnityEngine.AIModule.dll</HintPath>
@@ -385,11 +260,32 @@
  <Reference Include="UnityEngine.XRModule">
  <HintPath>C:/Program Files/Unity/Hub/Editor/2019.3.8f1/Editor/Data/Managed/UnityEngine/UnityEngine.XRModule.dll</HintPath>
  </Reference>
+ <Reference Include="UnityEditor.VR">
+ <HintPath>C:/Program Files/Unity/Hub/Editor/2019.3.8f1/Editor/Data/UnityExtensions/Unity/UnityVR/Editor/UnityEditor.VR.dll</HintPath>
+ </Reference>
+ <Reference Include="UnityEditor.Graphs">
+ <HintPath>C:/Program Files/Unity/Hub/Editor/2019.3.8f1/Editor/Data/Managed/UnityEditor.Graphs.dll</HintPath>
+ </Reference>
+ <Reference Include="UnityEditor.WindowsStandalone.Extensions">
+ <HintPath>C:/Program Files/Unity/Hub/Editor/2019.3.8f1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/UnityEditor.WindowsStandalone.Extensions.dll</HintPath>
+ </Reference>
+ <Reference Include="UnityEditor.WebGL.Extensions">
+ <HintPath>C:/Program Files/Unity/Hub/Editor/2019.3.8f1/Editor/Data/PlaybackEngines/WebGLSupport/UnityEditor.WebGL.Extensions.dll</HintPath>
+ </Reference>
+ <Reference Include="UnityEditor.Android.Extensions">
+ <HintPath>C:/Program Files/Unity/Hub/Editor/2019.3.8f1/Editor/Data/PlaybackEngines/AndroidPlayer/UnityEditor.Android.Extensions.dll</HintPath>
+ </Reference>
+ <Reference Include="UnityEditor.iOS.Extensions">
+ <HintPath>C:/Program Files/Unity/Hub/Editor/2019.3.8f1/Editor/Data/PlaybackEngines/iOSSupport/UnityEditor.iOS.Extensions.dll</HintPath>
+ </Reference>
  <Reference Include="Newtonsoft.Json">
  <HintPath>E:/Projects/bitnaughts.unity/Assets/bitnaughts/Newtonsoft.Json.dll</HintPath>
  </Reference>
  <Reference Include="System.Runtime">
  <HintPath>E:/Projects/bitnaughts.unity/Assets/unity.async/Plugins/System.Runtime.dll</HintPath>
+ </Reference>
+ <Reference Include="UnityEditor.Advertisements">
+ <HintPath>E:/Projects/bitnaughts.unity/Library/PackageCache/com.unity.ads@2.3.1/Editor/UnityEditor.Advertisements.dll</HintPath>
  </Reference>
  <Reference Include="UnityEngine.Advertisements.Editor">
  <HintPath>E:/Projects/bitnaughts.unity/Library/PackageCache/com.unity.ads@2.3.1/Runtime/UnityEngine.Advertisements.Editor.dll</HintPath>
@@ -399,6 +295,9 @@
  </Reference>
  <Reference Include="UnityEngine.Purchasing">
  <HintPath>E:/Projects/bitnaughts.unity/Library/PackageCache/com.unity.purchasing@2.0.6/UnityEngine.Purchasing.dll</HintPath>
+ </Reference>
+ <Reference Include="UnityEditor.Purchasing">
+ <HintPath>E:/Projects/bitnaughts.unity/Library/PackageCache/com.unity.purchasing@2.0.6/Editor/UnityEditor.Purchasing.dll</HintPath>
  </Reference>
  <Reference Include="UnityEditor.iOS.Extensions.Xcode">
  <HintPath>C:/Program Files/Unity/Hub/Editor/2019.3.8f1/Editor/Data/PlaybackEngines/iOSSupport/UnityEditor.iOS.Extensions.Xcode.dll</HintPath>
@@ -760,12 +659,6 @@
  <Reference Include="Boo.Lang">
  <HintPath>C:/Program Files/Unity/Hub/Editor/2019.3.8f1/Editor/Data/MonoBleedingEdge/lib/mono/unityscript/Boo.Lang.dll</HintPath>
  </Reference>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="UnityAsync.csproj">
-      <Project>{351DB1C0-6C09-A9F5-8BA5-1B276618044A}</Project>
-      <Name>UnityAsync</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
