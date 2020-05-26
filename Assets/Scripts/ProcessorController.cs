@@ -77,20 +77,16 @@ public class ProcessorController : ComponentController
         this.script = script;
         this.script = new Processor.Script( // All Variables must be 3 letters long... because it make the code look good...
             new string[] {
-                "set lef 5",
-                "set rig 6",
-                
-                "jil inv 0 ",
-                "jig inv 0 ",
-                
-                "fun lef -5",
-
-                "fun lef 5",
-
-                "jin inv 0 5", //no thrust level change, check gimbal opts
-                "jin inh 0 9",
-
-                "set ptr 2"
+                "set gim 5",     //0: Gimbal Id = 5, its the 6th element in Components
+                "set thr 6",     //1: Thruster Id = 6, its the 7th element in Components 
+                "fun gim 5",     //2: Turn Gimbal 5 degrees
+                "jie res 90 6",  //3: If resulting Gimbal angle is equal to 90, go to line 6
+                "fun thr res",   //4: Increase/decrease thrust based on resulting angle (arbitrary line)
+                "set ptr 2",     //5: Go to line 2 (keep turning gimbal until its equal to 90)
+                "fun gim -5",    //6: Turn Gimbal -5 degrees
+                "jie res -90 2", //7: If resulting Gimbal angle is equal to -90, go to line 2
+                "fun thr res",   //8: Increase/decrease thrust based on resulting angle (arbitrary line)
+                "set ptr 6"      //9: Go to line 6 (keep turning gimbal until tis equal to -90)
             }
         );
         variables = new Dictionary<string, float>();
