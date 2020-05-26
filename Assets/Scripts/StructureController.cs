@@ -89,7 +89,7 @@ public class StructureController : MonoBehaviour
                 //     break;
             }
         }
-        rotator.Rotate(new Vector3(0, rotation, 0));
-        transform.Translate(translation);
+        rotator.Rotate(new Vector3(0, rotation / active_component_count, 0));
+        transform.Translate(translation / active_component_count);
     }
 }

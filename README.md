@@ -23,7 +23,7 @@ Interested in setting up the BitNaughts development environment? You're at the r
 
 ### Prerequisites
 
-- [Unity 2019.3.8f1.exe](https://unity3d.com/unity/qa/lts-releases)
+- [Unity 2019.3](https://unity.com/releases/2019-3)
 
 ### Cloning
 

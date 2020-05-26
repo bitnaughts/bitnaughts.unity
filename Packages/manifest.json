@@ -1,21 +1,20 @@
 {
   "dependencies": {
-    "com.bitnaughts.bitnaughts": "git+https://github.com/bitnaughts/bitnaughts",
     "com.unity-packages.inspector-buttons": "git+https://github.com/unity-packages/inspector-buttons",
     "com.unity.2d.sprite": "1.0.0",
     "com.unity.2d.tilemap": "1.0.0",
-    "com.unity.ads": "2.0.8",
+    "com.unity.ads": "3.4.4",
     "com.unity.analytics": "3.3.5",
     "com.unity.collab-proxy": "1.2.16",
     "com.unity.ide.rider": "1.1.4",
-    "com.unity.ide.vscode": "1.1.4",
+    "com.unity.ide.vscode": "1.2.0",
     "com.unity.multiplayer-hlapi": "1.0.4",
     "com.unity.purchasing": "2.0.6",
     "com.unity.test-framework": "1.1.13",
     "com.unity.textmeshpro": "2.0.1",
     "com.unity.timeline": "1.2.14",
     "com.unity.ugui": "1.0.0",
-    "com.unity.xr.legacyinputhelpers": "1.3.11",
+    "com.unity.xr.legacyinputhelpers": "2.1.3",
     "com.unity.modules.ai": "1.0.0",
     "com.unity.modules.androidjni": "1.0.0",
     "com.unity.modules.animation": "1.0.0",
@@ -49,10 +48,6 @@
     "com.unity.modules.xr": "1.0.0"
   },
   "lock": {
-    "com.bitnaughts.bitnaughts": {
-      "revision": "HEAD",
-      "hash": "13781ab96b3707babd586bf97497e9f5a08e13ef"
-    },
     "com.unity-packages.inspector-buttons": {
       "revision": "HEAD",
       "hash": "d110e0bdd63c4cb5349ea85be6a3d33baf5fb1c2"

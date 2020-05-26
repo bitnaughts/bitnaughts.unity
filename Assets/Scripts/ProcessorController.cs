@@ -10,35 +10,44 @@ public static class Processor
 {
     /* "Analog" Assembly Language */
     public const string Operations = "ops",
-        /* Operations Format: $0 $1 $2 (opt. $3)        */
-        /* $0 == opcode                                 */
-        /* $1 == variable reference                     */
-        /* $2 == variable reference, or float constant  */
-        /* $3 == component reference, for api calls     */
-        Set       = "set", /* $1 = $2                   */
-        /* Arithmetic                                   */
-        Add       = "add", /* $1 += $2, or $1 = $1 + $2 */ 
-        Subtract  = "sub", /* $1 -= $2, or $1 = $1 - $2 */
-        Multiply  = "mul", /* $1 *= $2, or $1 = $1 * $2 */
-        Divide    = "div", /* $1 /= $2, or $1 = $1 / $2 */
-        Modulo    = "mod", /* $1 %= $2, or $1 = $1 % $2 */
-        /* Trigonometry                                 */
-        Sine      = "sin", /* $1 = Sin($2)              */
-        Cosine    = "cos", /* $1 = Cos($2)              */
-        Tangent   = "tan", /* $1 = Tan($2)              */
-        /* Stack Manipulation via Pointer variable      */
-        /* Interactivity                                */
-        /* Components establish an "API Endpoint" using */
-        /* an assigned Component ID, all Endpoints take */
-        /* one analog parameter                         */
-        /* given reference id                           */
-        Function  = "fun", /* $1 = Cmp[$2].Function($3) */
-        Get       = "get", /* $1 = Cmp[$2].Get($4)      */
-        Print     = "pri"; /* Print($1)                 */
+        /* Operations Format: $0 $1 $2                 */
+        /* $0 == opcode                                */
+        /* $1 == variable reference                    */
+        /* $2 == variable reference, or float constant */
+        /* Variable Declarations                       */
+        Set = "set", /* $1 = $2                        */
+        /* Arithmetic                                  */
+        Add      = "add", /* $1 += $2, or $1 = $1 + $2 */ 
+        Subtract = "sub", /* $1 -= $2, or $1 = $1 - $2 */
+        Multiply = "mul", /* $1 *= $2, or $1 = $1 * $2 */
+        Divide   = "div", /* $1 /= $2, or $1 = $1 / $2 */
+        Modulo   = "mod", /* $1 %= $2, or $1 = $1 % $2 */
+        /* Trigonometry                                */
+        Sine    = "sin", /* $res = Sin($1)             */
+        Cosine  = "cos", /* $res = Cos($1)             */
+        Tangent = "tan", /* $res = Tan($1)             */
+        /* Stack Manipulation                          */
+        Jump_If_Greater   = "jig", /* Goto $3 if $1 > $2 */
+        Jump_If_Equal     = "jie", /* Goto $3 if $1 = $2 */
+        Jump_If_Not_Equal = "jin", /* Goto $3 if $1 = $2 */
+        Jump_If_Less      = "jil", /* Goto $3 if $1 < $2 */
+
+        /* Interactivity                               */
+        Function  = "fun", /* $res = Cmp[$1].Fx($2)    */
+        Get       = "get", /* $res = Cmp[$1].Get($2)   */
+        Print     = "pri"; /* Print($1)                */
 
     public const string Variables = "var",
         Pointer = "ptr",
-        Result = "res";
+        Result = "res",
+        /* Input                                       */
+        Input_W = "inw", /* Get Input of 'W'          */
+        Input_A = "ina", /* Get Input of 'A'           */
+        Input_S = "ins", /* Get Input of 'S'           */
+        Input_D = "ind", /* Get Input of 'D'           */
+        Input_Horz = "inh",
+        Input_Vert = "inv";
+        
 
     public const char Space = ' ',
         New_Line = '\n';
@@ -61,22 +70,29 @@ public class ProcessorController : ComponentController
     protected string[] ops;
 
     protected Dictionary<string, float> variables;
+    private float ptr_val = 0;
 
     public void Flash(Processor.Script script) 
     {
         this.script = script;
+        this.script = new Processor.Script( // All Variables must be 3 letters long... because it make the code look good...
+            new string[] {
+                "set lef 5",
+                "set rig 6",
+                
+                "jil inv 0 ",
+                "jig inv 0 ",
+                
+                "fun lef -5",
 
-        this.script = new Processor.Script(
-            "set rotation 10\n" + 
-            "set gimbal 5\n" + 
-            "set z 10\n" + 
-            "add z 1\n" + 
-            "fun gimbal 5\n" + 
-            "pri res\n" +
-            "\n" +
-            "set ptr 3\n"
+                "fun lef 5",
+
+                "jin inv 0 5", //no thrust level change, check gimbal opts
+                "jin inh 0 9",
+
+                "set ptr 2"
+            }
         );
-
         variables = new Dictionary<string, float>();
         variables.Add(Processor.Pointer, 0);
         variables.Add(Processor.Result, 0); 
@@ -88,12 +104,12 @@ public class ProcessorController : ComponentController
     public void Action (ComponentController[] components)
     {
         if (script == null) Flash(null);
-        // print (
-        //     "Debugging line " + variables[Processor.Pointer] + ": " + script.lines[Mathf.RoundToInt(variables[Processor.Pointer])] + "\n" +
-        //     string.Join(";", variables.Select(kvp => kvp.Key + ": " + kvp.Value))
-        // );
-
+        print (
+            "Debugging line " + variables[Processor.Pointer] + ": " + script.lines[Mathf.RoundToInt(variables[Processor.Pointer])] + "\n" +
+            string.Join(";", variables.Select(kvp => kvp.Key + ": " + kvp.Value))
+        );
         ops = script.lines[Mathf.RoundToInt(variables[Processor.Pointer])].Split(Processor.Space);
+        ptr_val = variables[Processor.Pointer];
         switch (ops[0])
         {
             case Processor.Set:
@@ -123,6 +139,22 @@ public class ProcessorController : ComponentController
             case Processor.Tangent:
                 variables[ops[1]] = Mathf.Tan(Parse(ops[2])); 
                 break;
+            case Processor.Jump_If_Greater:
+                if (Parse(ops[1]) > Parse(ops[2]))
+                    variables[Processor.Pointer] = Parse(ops[3]);
+                break;
+            case Processor.Jump_If_Equal:
+                if (Parse(ops[1]) == Parse(ops[2]))
+                    variables[Processor.Pointer] = Parse(ops[3]);
+                break;
+            case Processor.Jump_If_Not_Equal:
+                if (Parse(ops[1]) != Parse(ops[2]))
+                    variables[Processor.Pointer] = Parse(ops[3]);
+                break;
+            case Processor.Jump_If_Less:
+                if (Parse(ops[1]) < Parse(ops[2]))
+                    variables[Processor.Pointer] = Parse(ops[3]);
+                break;
             case Processor.Print:
                 print ("print " + Parse(ops[1]));
                 break;
@@ -130,7 +162,8 @@ public class ProcessorController : ComponentController
                 variables[Processor.Result] = components[Mathf.RoundToInt(Parse(ops[1]))].Action(Parse(ops[2]));
                 break;
         }
-        variables[Processor.Pointer]++;
+        // If line pointer is unchanged, step to next instruction
+        if (ptr_val == variables[Processor.Pointer]) variables[Processor.Pointer]++;
     }
 
     float parse_value = 0f;
@@ -140,7 +173,28 @@ public class ProcessorController : ComponentController
         {
             return parse_value;
         }
-        return variables[input];
+        parse_value = 1f;
+        if (input[0] == '-') 
+        {
+            parse_value = -1f;
+            input = input.Substring(1);
+        }
+        switch (input) 
+        {
+            case Processor.Input_W:
+                return Input.GetKey(KeyCode.W) ? parse_value : 0;
+            case Processor.Input_A:
+                return Input.GetKey(KeyCode.A) ? parse_value : 0;
+            case Processor.Input_S:
+                return Input.GetKey(KeyCode.S) ? parse_value : 0;
+            case Processor.Input_D:
+                return Input.GetKey(KeyCode.D) ? parse_value : 0;
+            case Processor.Input_Vert:
+                return Input.GetAxis("Vertical");
+            case Processor.Input_Horz:
+                return Input.GetAxis("Horizontal");
+        }
+        return parse_value * variables[input];
     }
 
     // public bool Action () {

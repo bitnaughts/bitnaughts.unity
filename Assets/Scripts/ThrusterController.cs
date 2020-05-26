@@ -7,30 +7,23 @@ using UnityEngine;
 
 
 public class ThrusterController : ComponentController {   
+
+    public float max_step = 5f;
+
     protected Vector3 thrust_vector;
+    private float throttle_level = 0;
+
     public override float Action (float input) {
-        return input;
-        
-        // temperature = connected_components[0].Cool(0f);
-        // var main = GetComponent<ParticleSystem>().main;
-        // main.startSize = temperature * 20f;
+        throttle_level = Mathf.Clamp(throttle_level + Mathf.Clamp(input, -max_step, max_step), 0, 100);
 
+        var exhaust_emission = GetComponent<ParticleSystem>().emission;
+        exhaust_emission.rate = throttle_level;
 
-
-        // thrust_vector = new Vector3(
-        //     -(float)Math.Cos(transform.rotation.eulerAngles.y * Mathf.Deg2Rad) * temperature,
-        //     0,
-        //     (float)Math.Sin(transform.rotation.eulerAngles.y * Mathf.Deg2Rad) * temperature
-        // );
-
-        // Debug.DrawLine(
-        //     transform.position, 
-        //     transform.position + thrust_vector, Color.white, 10f, false
-        // );
+        return throttle_level;
     }
     public Vector3 GetThrustVector() 
     {
-        return transform.forward * temperature;
+        return transform.forward * throttle_level / 100f;
     }
     public Vector3 GetPosition() 
     {
