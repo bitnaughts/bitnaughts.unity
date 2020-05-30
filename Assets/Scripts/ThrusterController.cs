@@ -8,7 +8,7 @@ using UnityEngine;
 
 public class ThrusterController : ComponentController {   
 
-    public float max_step = 5f;
+    public float max_step = 45f;
 
     protected Vector3 thrust_vector;
     private float throttle_level = 0;

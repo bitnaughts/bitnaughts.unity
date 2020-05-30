@@ -6,8 +6,7 @@ using UnityEngine;
 public class StructureController : MonoBehaviour
 {
 
-    const float debug_duration = .2f;
-
+    const float debug_duration = .02f;
 
     ComponentController[] components;
 
@@ -25,7 +24,10 @@ public class StructureController : MonoBehaviour
 
         rotator = transform.Find("Rotator");
         child_count = rotator.childCount;
-        
+
+        // foreach (var controller in components) {
+        //     controller.Init(components);
+        // }
     }
 
     float gimbal_test = 0f;
@@ -52,7 +54,7 @@ public class StructureController : MonoBehaviour
         center_of_mass /= active_component_count;
 
         // Testing Center of Mass:
-        // Debug.DrawLine(center_of_mass, center_of_mass + Vector3.up, Color.white, debug_duration, false);
+        Debug.DrawLine(center_of_mass, center_of_mass + Vector3.up, Color.white, debug_duration, false);
 
         float rotation = 0f;
         Vector3 translation = new Vector3(0, 0, 0);
@@ -64,8 +66,8 @@ public class StructureController : MonoBehaviour
                 case ThrusterController thruster:
 
                     // Testing Thrust:
-                    // Debug.DrawLine(thruster.GetPosition(), thruster.GetPosition() + thruster.GetThrustVector(), Color.red, debug_duration, false);
-                    // Debug.DrawLine(thruster.GetPosition(), center_of_mass, Color.blue, debug_duration, false);
+                    Debug.DrawLine(thruster.GetPosition(), thruster.GetPosition() + thruster.GetThrustVector(), Color.red, debug_duration, false);
+                    Debug.DrawLine(thruster.GetPosition(), center_of_mass, Color.blue, debug_duration, false);
 
                     translation -= thruster.GetThrustVector();
 

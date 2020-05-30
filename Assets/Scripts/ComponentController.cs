@@ -38,15 +38,8 @@ using UnityEngine;
 public abstract class ComponentController : MonoBehaviour {
     
     public ComponentController[] connected_components;
-
-    // public List<KeyValuePair<string, 
-
-    // protected float volume = 1, fill_volume = .5f; 
-
     protected float temperature = .5f;
-
     protected float hitpoints;
-    
     protected float action_speed = .1f, action_cooldown = 0f;
 
     protected string prefab_path;
@@ -86,4 +79,8 @@ public abstract class ComponentController : MonoBehaviour {
     //     temperature -= amount;
     //     return temperature;
     // }
+    void OnMouseUp ()
+    {
+        GameObject.Find("Panel").GetComponent<UIController>().Set(this);
+    }
 }
