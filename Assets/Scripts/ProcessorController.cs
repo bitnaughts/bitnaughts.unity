@@ -73,7 +73,7 @@ public class Instruction
     }
     public override string ToString()
     {
-        return label + " " + op_code + " " + dest_reg + " " + src_reg + " " + src_reg_2 + "\n";
+        return label + " " + op_code + " " + dest_reg + " " + src_reg + " " + src_reg_2;
     }
 }
 
@@ -184,10 +184,10 @@ public class ProcessorController : ComponentController
         }
         if (pointer == variables[Processor.Pointer]) variables[Processor.Pointer]++; // If line pointer is unchanged, step to next instruction
 
-        print(ToString());
+        // print(ToString());
 
-        var lines = variables.Select(kvp => kvp.Key + ": " + kvp.Value);
-        print(string.Join(Environment.NewLine, lines));
+        // var lines = variables.Select(kvp => kvp.Key + ": " + kvp.Value);
+        // print(string.Join(Environment.NewLine, lines));
         // print (
         //     "Debugging line " + variables[Processor.Pointer] + ": " + script.lines[Mathf.RoundToInt(variables[Processor.Pointer])] + "\n" +
         //     string.Join(";", variables.Select(kvp => kvp.Key + ": " + kvp.Value))
@@ -222,18 +222,29 @@ public class ProcessorController : ComponentController
                 return Input.GetAxis("Horizontal");
             default:
                 for (int i = 0; i < instructions.Count; i++) 
-                {
                     if (input == instructions[i].label) return i;
-                }
-                return parse_value * variables[input];
+                if (variables.ContainsKey(input))
+                    return parse_value * variables[input];
+                return 0;                
         }
     }
     public override string ToString()
     {
         string output = "";
-        foreach (var inst in instructions)
-            output += inst.ToString();
+        for(int i = 0; i < instructions.Count; i++) 
+        {
+             if (i == variables[Processor.Pointer])
+             {
+                 output += "<color=red>" + instructions[i].ToString() + "</color>\n";
+             }
+             else 
+             {
+                 output += instructions[i].ToString() + "\n";
+             }
+        }
+        output += "\n";
+        var lines = variables.Select(kvp => kvp.Key + ": " + kvp.Value);
+        output += string.Join(Environment.NewLine, lines);
         return output;
-        // .Join("\n", instructions.ToString());
     }
 }

@@ -19,13 +19,20 @@ public class UIController : MonoBehaviour
     void Update()
     {
         count += speed;
-        if (count >= 2 || count <= -1) speed = -speed;
+        if (count >= 1 || count <= 0) speed = -speed;
         if (component == null) {
             return;
         }
-        GetComponent<RectTransform>().sizeDelta = Vector3.Slerp(new Vector2(200, 200), new Vector2(250, 300), count);
+        GetComponent<RectTransform>().sizeDelta = Vector3.Slerp(new Vector2(250, 250), new Vector2(300, 300), count);
         transform.position = component.transform.position;
         transform.Translate(new Vector3(0,20,0));
+
+        switch (component) 
+        {
+            case ProcessorController processor:
+                transform.GetChild(0).GetChild(0).GetComponent<InputField>().text = processor.ToString();
+                break;
+        }
 
 
             
@@ -33,32 +40,16 @@ public class UIController : MonoBehaviour
     public void Set(ComponentController component) 
     {
         this.component = component;
-        
-        //component.script.ToString();
-        switch (component) 
-        {
-            case ProcessorController processor:
-                // int line_number = 0;
-                // string script = "";
-                // foreach (string line in processor.GetInstructionSet().ToString().Split('\n')) 
-                // {
-                //     script += Pad(line_number++) + ": " + line + "\n";
-                // }
-                transform.GetChild(0).GetChild(0).GetComponent<InputField>().text = processor.ToString();
-                break;
-            default:
-                transform.GetChild(0).GetChild(0).GetComponent<InputField>().text = component.name;
-                break;
-        }
+        // transform.GetChild(0).GetChild(0).GetComponent<InputField>().text = component.name;
     }
     public void OnValueChanged() 
     {
-        switch (component) 
-        {
-            case ProcessorController processor:
-                processor.Init(transform.GetChild(0).GetChild(0).GetComponent<InputField>().text);
-                break;
-        }
+        // switch (component) 
+        // {
+        //     case ProcessorController processor:
+        //         processor.Init(transform.GetChild(0).GetChild(0).GetComponent<InputField>().text);
+        //         break;
+        // }
         
     }
     public string Parse(string line) 
