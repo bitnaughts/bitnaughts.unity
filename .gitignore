@@ -6,3 +6,6 @@ Temp/
 .vs/bitnaughts.unity/v16/.suo
 .vs/slnx.sqlite
 .vs/VSWorkspaceState.json
+*.csproj
+*.sln
+.vscode/settings.json
