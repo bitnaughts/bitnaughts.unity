@@ -18,24 +18,37 @@ public class UIController : MonoBehaviour
     float speed = .005f;
     void Update()
     {
-        count += speed;
-        if (count >= 1 || count <= 0) speed = -speed;
+        string display = "";
+        string gradient = "abcdefghijklmnop";//░▒▓█▓▒░";
+        for (int i = 0; i < 10; i++) 
+        {
+            display += gradient[(int)(count + i) % gradient.Length];
+        }
+        for (int i = 0; i < 10; i++) 
+        {
+            display += gradient[(int)(count + i + 1) % gradient.Length];
+        }
+        for (int i = 0; i < 10; i++) 
+        {
+            display += gradient[(int)(count + i + 2) % gradient.Length];
+        }
+        for (int i = 0; i < 10; i++) 
+        {
+            display += gradient[(int)(count + i + 3) % gradient.Length];
+        }
+        GameObject.Find("Label").GetComponent<InputField>().text = display;
+
+        count += Time.deltaTime * 10;
+        // if (count >= 1 || count <= 0) speed = -speed;
         if (component == null) {
             return;
         }
-        GetComponent<RectTransform>().sizeDelta = Vector3.Slerp(new Vector2(250, 250), new Vector2(300, 300), count);
+        GetComponent<RectTransform>().sizeDelta = Vector3.Slerp(new Vector2(300, 300), new Vector2(300, 300), count);
         transform.position = component.transform.position;
-        transform.Translate(new Vector3(0,20,0));
-
-        switch (component) 
-        {
-            case ProcessorController processor:
-                transform.GetChild(0).GetChild(0).GetComponent<InputField>().text = processor.ToString();
-                break;
-        }
+        transform.Translate(new Vector3(0,10,0));
+        transform.GetChild(0).GetChild(0).GetComponent<InputField>().text = component.ToString();
 
 
-            
     }
     public void Set(ComponentController component) 
     {

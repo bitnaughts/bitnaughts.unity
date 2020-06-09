@@ -5,6 +5,7 @@ using System.Collections.Specialized;
 using System.Linq;
 using System.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.UI;
 
 public static class Processor
 {
@@ -27,14 +28,14 @@ public static class Processor
         Cosine = "cos", /* $res = Cos($1)             */
         Tangent = "tan", /* $res = Tan($1)             */
         /* Stack Manipulation                          */
-        Jump = "jmp", /* Goto $1 */
+        Jump = "jum", /* Goto $1 */
         Jump_If_Greater = "jig", /* Goto $3 if $1 > $2 */
         Jump_If_Equal = "jie", /* Goto $3 if $1 = $2 */
         Jump_If_Not_Equal = "jin", /* Goto $3 if $1 = $2 */
         Jump_If_Less = "jil", /* Goto $3 if $1 < $2 */
 
         /* Interactivity                               */
-        Function = "fun", /* $res = Cmp[$1].Fx($2)    */
+        Component = "com", /* $res = component[$1].Action($2) */
         Get = "get", /* $res = Cmp[$1].Get($2)   */
         Print = "pri"; /* Print($1)                */
 
@@ -55,6 +56,7 @@ public static class Processor
 }
 public class Instruction
 {
+    int red_color = 0;
     public string label = ""; //If "", default to showing line number
     public string label_divider = ":";
     public string op_code;
@@ -71,9 +73,18 @@ public class Instruction
         src_reg = parts.Length > 3 ? parts[3] : null;
         src_reg_2 = parts.Length > 4 ? parts[4] : null;
     }
+    public Instruction Get()
+    {
+        red_color = 255;
+        return this;
+    }
     public override string ToString()
     {
-        return label + " " + op_code + " " + dest_reg + " " + src_reg + " " + src_reg_2;
+        string hex = Convert.ToString(red_color, 16);
+        if (hex.Length == 1) hex = "0" + hex;
+        string output = "<color=#" + hex + "0000>" + label + " " + op_code + " " + dest_reg + " " + src_reg + " " + src_reg_2 + "</color>";
+        red_color = (int)(red_color * .5f);
+        return output;
     }
 }
 
@@ -96,27 +107,73 @@ public class ProcessorController : ComponentController
         return input;
     }
     float pointer;
-    public void Action(ComponentController[] components)
+    public void Action(Dictionary<string, ComponentController> components)
     {
         if (instructions == null) Init(
             new string[] {
-                "001 set gimbal 5",     //0: Gimbal Id = 5, its the 6th element in Components
-                "002 set thruster 6",     //1: Thruster Id = 6, its the 7th element in Components 
-                "cww fun gimbal 5",     //2: Turn Gimbal 5 degrees
-                "004 jie res 90 ccw",  //3: If resulting Gimbal angle is equal to 90, go to line 6
-                "005 fun thruster res",   //4: Increase/decrease thrust based on resulting angle (arbitrary line)
-                "006 set ptr cww",     //5: Go to line 2 (keep turning gimbal until its equal to 90)
-                "ccw fun gimbal -5",    //6: Turn Gimbal -5 degrees
-                "008 jie res -90 cww", //7: If resulting Gimbal angle is equal to -90, go to line 2
-                "009 fun thruster res",   //8: Increase/decrease thrust based on resulting angle (arbitrary line)
-                "010 set ptr ccw"      //9: Go to line 6 (keep turning gimbal until tis equal to -90)
+                // "cww com gim 5",     //2: Turn Gimbal 5 degrees
+                // "004 jie res 90 ccw",  //3: If resulting Gimbal angle is equal to 90, go to line 6
+                // "005 com thr 1",   //4: Increase/decrease thrust based on resulting angle (arbitrary line)
+                // "006 jum cww",     //5: Go to line 2 (keep turning gimbal until its equal to 90)
+                // "ccw com gim -5",    //6: Turn Gimbal -5 degrees
+                // "008 jie res -90 cww", //7: If resulting Gimbal angle is equal to -90, go to line 2
+                // "009 com thr -1",   //8: Increase/decrease thrust based on resulting angle (arbitrary line)
+                // "010 jum ccw"      //9: Go to line 6 (keep turning gimbal until tis equal to -90)
+
+                // Super Simple Self-Controlled Flier
+                // "STR com thr inv",
+                // "001 com thr_gim inh",
+                // "002 com sen 10",
+                // "003 com sen_gim inh",
+                // "004 jum STR",
+
+                "STR com sen_gim 5",
+                "--- com sen 1",
+                "--- jin inv 0 VRT",
+                "--- jie inv 0 V_R",
+                "L_C jig inh 0 LFT",
+                "R_C jil inh 0 RGT",
+                "--- jie inh 0 H_R",
+                "VRT com thr 10", 
+                "--- jum L_C",
+                "V_R com thr -20", 
+                "--- jum L_C",
+                "LFT com l_thr 10", 
+                "--- jum R_C",
+                "RGT com r_thr 10", 
+                "--- jum STR",
+                "H_R com l_thr -20",
+                "--- com r_thr -20",
+                "--- jum STR",
+                // "004 mul vert 5",
+                // "005 fun 6 vert",
+                // "006 jum STR",
+                // "HRZ set horz inh",
+                // "008 mul horz 5",
+                // "009 fun 5 horz",
+                // "010 jum STR",
+
+                // "STR set vert inv",
+                // "001 mul vert 5",
+                // "002 fun 6 vert",
+                // "003 set horz inh",
+                // "004 mul horz 5",
+                // "005 fun 5 horz",
+                // "END set ptr STR"
+
+                // "001 set gimbal 5",     //0: Gimbal Id = 5, its the 6th element in Components
+                // "002 set thruster 6",     //1: Thruster Id = 6, its the 7th element in Components 
+                // "cww fun gimbal 5",     //2: Turn Gimbal 5 degrees
+                // "004 jie res 90 ccw",  //3: If resulting Gimbal angle is equal to 90, go to line 6
+                // "005 fun thruster res",   //4: Increase/decrease thrust based on resulting angle (arbitrary line)
+                // "006 set ptr cww",     //5: Go to line 2 (keep turning gimbal until its equal to 90)
+                // "ccw fun gimbal -5",    //6: Turn Gimbal -5 degrees
+                // "008 jie res -90 cww", //7: If resulting Gimbal angle is equal to -90, go to line 2
+                // "009 fun thruster res",   //8: Increase/decrease thrust based on resulting angle (arbitrary line)
+                // "010 set ptr ccw"      //9: Go to line 6 (keep turning gimbal until tis equal to -90)
             }
         );
-
-        var inst = instructions[
-            Mathf.RoundToInt(variables[Processor.Pointer])
-        ];
-        print (inst.ToString());
+        var inst = GetInstruction(Mathf.RoundToInt(variables[Processor.Pointer]));
         pointer = variables[Processor.Pointer];
         switch (inst.op_code)
         {
@@ -178,8 +235,8 @@ public class ProcessorController : ComponentController
                 if (Parse(inst.dest_reg) < Parse(inst.src_reg))
                     variables[Processor.Pointer] = Parse(inst.src_reg_2);
                 break;
-            case Processor.Function:
-                variables[Processor.Result] = components[Mathf.RoundToInt(Parse(inst.dest_reg))].Action(Parse(inst.src_reg));
+            case Processor.Component:
+                variables[Processor.Result] = components[inst.dest_reg].Action(Parse(inst.src_reg));
                 break;
         }
         if (pointer == variables[Processor.Pointer]) variables[Processor.Pointer]++; // If line pointer is unchanged, step to next instruction
@@ -228,23 +285,22 @@ public class ProcessorController : ComponentController
                 return 0;                
         }
     }
+    public Instruction GetInstruction(int index) 
+    {
+        return instructions[index].Get();   
+    }
     public override string ToString()
     {
-        string output = "";
+        string output = "╠╕ Processor Component: " + this.name + "\n"; 
+        // string output = "╠╕" + this.name + "\n";
         for(int i = 0; i < instructions.Count; i++) 
         {
-             if (i == variables[Processor.Pointer])
-             {
-                 output += "<color=red>" + instructions[i].ToString() + "</color>\n";
-             }
-             else 
-             {
-                 output += instructions[i].ToString() + "\n";
-             }
+            output += "╟┤ │ " + instructions[i].ToString() + "\n";
         }
-        output += "\n";
-        var lines = variables.Select(kvp => kvp.Key + ": " + kvp.Value);
-        output += string.Join(Environment.NewLine, lines);
-        return output;
+        output += "╟┤ ║ ptr:  000 " + Plot("Marker", variables[Processor.Pointer], 0, instructions.Count, instructions.Count)  + " " + instructions.Count.ToString("000") + "\n";
+        output += "╟┤ ║ res: -100 " + Plot("Marker", variables[Processor.Result], -100, 100, instructions.Count)  + " 100";
+        // var lines = variables.Select(kvp => kvp.Key + ": " + kvp.Value.ToString("0.000"));
+        // output += string.Join("\n╟┤", lines);
+        return output + "\n╟┘";
     }
 }

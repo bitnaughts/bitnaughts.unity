@@ -32,12 +32,15 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.Specialized;
+using System.Text;
 using System.Threading.Tasks;
+using System.Linq;
 using UnityEngine;
 
-public abstract class ComponentController : MonoBehaviour {
-    
-    public ComponentController[] connected_components;
+public abstract class ComponentController : MonoBehaviour
+{
+
+    // public ComponentController[] connected_components;
     protected float temperature = .5f;
     protected float hitpoints;
     protected float action_speed = .1f, action_cooldown = 0f;
@@ -45,16 +48,21 @@ public abstract class ComponentController : MonoBehaviour {
     protected string prefab_path;
     Color material_color;
 
+    UIController component_panel;
+
     // Visualized via marching cubes... On update, update cubes to any granular damage
-    void Start() {
-        
+    void Start()
+    {
+        // var panel = GameObject.Find("ComponentPanel");
+        component_panel = GameObject.Find("ComponentPanel")?.GetComponent<UIController>();
     }
-    public Transform GetTransform() {
+    public Transform GetTransform()
+    {
         return this.transform;
     }
 
     // void Update () {
-       
+
     //     if (action_cooldown > 0) { /* Updates Component's action cooldown timer */
     //         action_cooldown = Mathf.Clamp (action_cooldown, 0, action_cooldown - Time.deltaTime);
     //     } else {
@@ -64,23 +72,45 @@ public abstract class ComponentController : MonoBehaviour {
     //     //  print (this.temperature + ", " + action_cooldown + ", " + action_speed);
     //     // Visualize (); /* Updates Component's visual representation to current frame */
     // }
-    public abstract float Action (float input);
+    public abstract float Action(float input);
 
-    public void Remove () {
+    public void Remove()
+    {
         // foreach (var part in parts) Destroy (part.Value);
-        Destroy (this.gameObject);
+        Destroy(this.gameObject);
     }
 
-    // public float Heat(float amount) {
-    //     temperature += amount;
-    //     return temperature;
-    // }
-    // public float Cool(float amount) {
-    //     temperature -= amount;
-    //     return temperature;
-    // }
-    void OnMouseUp ()
+    void OnMouseUp()
     {
-        GameObject.Find("Panel").GetComponent<UIController>().Set(this);
+        component_panel.Set(this);
+        // if (componentPanel == null) 
+        // var structure_controller = GetComponentInParent(typeof(StructureController)) as StructureController;
+
+    }
+
+    public string Plot(string type, float value, float min, float max, int length)
+    {
+        string output = "";
+        string style = "░▒▓█" + "─┼├┤" + "╔╚";
+        float marker;
+        int i = 0;
+        switch (type)
+        {
+            case "ProgressBar":
+                marker = Mathf.Clamp(value.Remap(min, max, 0, length), 0, length);
+                if (float.IsNaN(marker)) return "";
+                // if (marker == length) return style[3].ToString().Repeat(length);
+                return (marker % 1 > 0) ? 
+                    style[3].ToString().Repeat(Mathf.FloorToInt(marker)) + style[(int) (4 * (marker % 1))] + ' '.ToString().Repeat(Mathf.FloorToInt(length - marker)) : 
+                    style[3].ToString().Repeat(Mathf.FloorToInt(marker)) + ' '.ToString().Repeat(Mathf.FloorToInt(length - marker));
+            case "Marker":
+                marker = Mathf.Clamp(value.Remap(min, max, 0, length), 0, length - .01f);
+                if (float.IsNaN(marker)) return "";
+                return new StringBuilder(style[4].ToString().Repeat(length)) 
+                { 
+                    [(int)marker] = style[5] 
+                }.ToString();
+        }
+        return "";
     }
 }
