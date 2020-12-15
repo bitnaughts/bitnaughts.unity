@@ -1,0 +1,9 @@
+[submodule "Assets/bitnaughts.assets"]
+	path = Assets/bitnaughts.assets
+	url = https://github.com/bitnaughts/bitnaughts.assets.git
+[submodule "Assets/bitnaughts.interpreter"]
+	path = Assets/bitnaughts.interpreter
+	url = https://github.com/bitnaughts/bitnaughts.interpreter.git
+[submodule "Assets/bitnaughts.ui.ux"]
+	path = Assets/bitnaughts.ui.ux
+	url = https://github.com/bitnaughts/bitnaughts.ui.ux.git
