@@ -7,3 +7,9 @@
 [submodule "Assets/bitnaughts.ui.ux"]
 	path = Assets/bitnaughts.ui.ux
 	url = https://github.com/bitnaughts/bitnaughts.ui.ux.git
+[submodule "Assets/bitnaughts.components"]
+	path = Assets/bitnaughts.components
+	url = https://github.com/bitnaughts/bitnaughts.components.git
+[submodule "Assets/bitnaughts.mainframe.client"]
+	path = Assets/bitnaughts.mainframe.client
+	url = https://github.com/bitnaughts/bitnaughts.mainframe.client.git
