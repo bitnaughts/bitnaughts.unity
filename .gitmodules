@@ -13,3 +13,6 @@
 [submodule "Assets/bitnaughts.mainframe.client"]
 	path = Assets/bitnaughts.mainframe.client
 	url = https://github.com/bitnaughts/bitnaughts.mainframe.client.git
+[submodule "Assets/dynagon"]
+	path = Assets/dynagon
+	url = https://github.com/bitnaughts/dynagon.git
