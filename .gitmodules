@@ -16,3 +16,6 @@
 [submodule "Assets/dynagon"]
 	path = Assets/dynagon
 	url = https://github.com/bitnaughts/dynagon.git
+[submodule "Assets/WebGLNativeInputField"]
+	path = Assets/WebGLNativeInputField
+	url = https://github.com/bitnaughts/WebGLNativeInputField.git
