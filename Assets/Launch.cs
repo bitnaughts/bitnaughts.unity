@@ -7,12 +7,6 @@ using UnityEngine.UI;
 using UnityEngine.Networking;
 using UnityEngine.Video;
 
-using Mapbox.Unity.Map;
-using Mapbox.Unity.Utilities;
-using Mapbox.Geocoding;
-using Mapbox.Utils;
-using Mapbox.Unity;
-
 public class Launch : MonoBehaviour
 {
     public VideoPlayer intro_1, intro_2, intro_3, intro_4, tv, war, war_video;
@@ -44,9 +38,9 @@ public class Launch : MonoBehaviour
     Vector2 screen_size;
     float about_timer = 1000f, tutorial_timer = -1f;
     public GameObject _Processor, _Cache, _Girder, _Gimbal, _Bulkhead, _Cannon, _Thruster, _Booster, _Sensor;
-    const string _campaign = "≜ Challenges", _location = "✵ Location", _line = "", _metrics = "⊞ Metrics", _logs = "⊟ Logs", _editor = "☄ BitNaughts", _monitor = "☄ Monitor",//☍ Editor"✯≐
+    const string _campaign = "≛ Missions", _location = "✵ Location", _line = "", _metrics = "⊞ Metrics", _logs = "⊟ Logs", _editor = "☄ BitNaughts", _monitor = "☄ Monitor",//☍ Editor"✯≐
     _launch = "※ Launch", _settings="⁝ Settings", _audio_up="+ Audio",_audio_down="- Audio", _reorient="> Reorient", _flip="> Flip", _font_size_up="+ Font",_font_size_down="- Font", _button_size_up="+ Buttons",_button_size_down="- Buttons",_debug_mode="$ Debug",
-        _about = "≟ About", _tutorial = "? Tutorial", _register = "@ Register", _sign_in = "@", _map = "⸸ Map", _blueprint = "▦ Blueprint", _select = "> Select", _new = "≗ New", _save = "≙ Save", _load = "≚ Load", _leaderboard = "≛ Database", _menu = "> Menu", _objects = "▢ Objects", _objects2 = "⊡ Function",
+        _about = "≟ About", _tutorial = "? Tutorial", _register = "@ Register", _sign_in = "@", _map = "⸸ Map", _blueprint = "▦ Blueprint", _select = "> Select", _new = "≗ New", _save = "≙ Save", _load = "≚ Load", _leaderboard = "≜ Database", _menu = "> Menu", _objects = "▢ Objects", _objects2 = "⊡ Function",
          //_replicator = " Replicator",
         _processor = "▥ Processor", _processor_description="◬ executes code",  
         _cache = "▤ Cache", _cache_description="≣ stores data", 
@@ -58,9 +52,9 @@ public class Launch : MonoBehaviour
         _thruster = "◉ Thruster", _thruster_description="⇊ burns fuel", 
         _booster = "◎ Booster", _booster_description="⇊ burns fuel", 
         _sensor = "◌ Sensor", _sensor_description="⇢ measures ranges", 
-        _zoom_in = "⇲ Zoom in", _zoom_out = "⇱ Zoom out",
+        _zoom_in = "⇲ Zoom in", _zoom_out = "⇱ Zoom out", _ok="☇ Ok",
         
-        _scroll_up = "˄ Scroll Up", _scroll_down = "˅ Scroll Down", _add_above = "+ New Line", _add_below = "+ Add Below", _back = "< Back", _delete = "- Delete",
+        _scroll_up = "↥ Scroll", _scroll_down = "↧ Scroll", _add_above = "⨥ New Line", _add_below = "+ Add Below", _back = "< Back", _delete = "⨪ Delete Line",
         _syntax = "◬ Syntax", _arithmetic = "∓ Arithmetic", _flow_control = "⋚ Flow Control", _boolean = "◑ Boolean", _trigonometry = "∡ Trigonometry", //⊶
         _jumpLabel = "≝ Jump Label", _jump = "⇥ Jump", _jump_If_Equal = "= Jump Equal", _jump_If_Not_Equal = "≠ Jump Not", _jump_If_Greater = "≩ Jump More", _jump_If_Less = "≨ Jump Less",  
         _add = "+ Add", _subtract = "- Sub", _absolute = "∥ Absolute", _multiply = "× Multiply", _divide = "÷ Divide", _modulo = "% Modulo", _exponential = "^ Exponential", _root = "√ Root", 
@@ -68,25 +62,27 @@ public class Launch : MonoBehaviour
         _function = "□ Function", _mark = "⊞ Mark", _log = "⊟ Log", _ping = "> Ping", _enter = "> Enter", 
         _set = "> Set", _and = "⋀ And", _or = "⋁ Or", _xor = "⊻ Xor", _nand = "⊼ Nand", _nor = "⊽ Nor",
         UpCarat = "^ ", DownCarat = "v ", MinusCarat = "- ", PlusCarat = "+ ", Carat = "> ", _constant = "> Constant", _variable = "> Variable", _user_input = "> User Input", _random = "> Random";
-    Vector2d[] launch_locations = { new Vector2d(2.37, 16.06), new Vector2d(51.72472, 94.44361), new Vector2d(-19.23, 133.21), new Vector2d(48.30, 23.23), new Vector2d(39.833, -98.583), new Vector2d(-15.27, -55.45)}; //(48° 21' 19" N 99° 59' 57" W) and the geographical center of South America (15° 27′ 39″ S, 55° 45′ 0″ W).
+    // Vector2d[] launch_locations = { new Vector2d(2.37, 16.06), new Vector2d(51.72472, 94.44361), new Vector2d(-19.23, 133.21), new Vector2d(48.30, 23.23), new Vector2d(39.833, -98.583), new Vector2d(-15.27, -55.45)}; //(48° 21' 19" N 99° 59' 57" W) and the geographical center of South America (15° 27′ 39″ S, 55° 45′ 0″ W).
     string[] settings_options = { _audio_up, _audio_down, _font_size_up, _font_size_down, _button_size_up, _button_size_down, _flip, _reorient, _debug_mode, _back },
-        _launch_menu = { "Africa", "Asia", "Australia", "Europe", "N. America", "S. America", _line, _line, _settings, _back }, //_campaign, _location, _line,  _logs, _metrics,  _objects, _syntax, _line, _settings, _back },
-        _launched_menu = { _campaign, _logs, _metrics, _objects, _syntax,  "",  _zoom_in, _zoom_out, _settings, _back },
-        _design_menu = { _about, _load, _save, _objects, _syntax, "", _zoom_in, _zoom_out, _settings, _launch },
+        _launch_menu = { "Africa", "Asia", "Australia", "Europe", "N. America", "S. America", _zoom_in, _zoom_out, _settings, _back }, //_campaign, _location, _line,  _logs, _metrics,  _objects, _syntax, _line, _settings, _back },
+        _launched_menu = {_about, _campaign, _logs, _metrics, _objects, _syntax, _zoom_in, _zoom_out, _settings, _back },
+        _missions_menu = { _objects, _logs, _metrics, _syntax, _objects2, _boolean, _arithmetic, _flow_control, _trigonometry, _back },
+        _design_menu = { _about, _campaign, _load, _save, _objects, _syntax, _zoom_in, _zoom_out, _settings, _launch },
         _objects_menu = { _processor, _cache, _bulkhead, _girder, _gimbal, _cannon, _thruster, _booster, _sensor, _back },
-        _syntax_menu = { _scroll_up, _add_above, _objects2, _boolean, _arithmetic, _trigonometry, _flow_control, _delete, _scroll_down, _back },
+        _syntax_menu = { _add_above, _objects2, _boolean, _arithmetic, _flow_control, _trigonometry, _scroll_up, _scroll_down, _delete, _back },
         _arthimetic_menu = { _set, _add, _subtract, _absolute, _multiply, _divide, _modulo, _exponential, _root, _back },
         _flow_control_menu = { _jumpLabel, _jump, _jump_If_Equal, _jump_If_Not_Equal, _jump_If_Greater, _jump_If_Less, _line, _line, _line, _back },
         _boolean_menu = { _set, "! Not", _and, _or, _xor, _nand, _nor, _line, _line, _back },
         _trigonometry_menu = { _sine, _cosine, _tangent, _secant, _cosecant, _cotangent, _arcsine, _arccosine, _arctangent, _back },
         _operand_menu = {_constant, _variable, _random, _line, _line, _line, _line, _line, _line, _back},
-        _variable_menu = {"☇ Ok", _line, _line, _line, _line, _line, _line, _line, _line, _back},
+        _variable_menu = {_ok, _line, _line, _line, _line, _line, _line, _line, _line, _back},
+        _jump_label_menu = {_ok, _line, _line, _line, _line, _line, _line, _line, _line, _back},
         _constant_menu = {_enter, "+ 100", "+ 10.", "+ 1.0", "+ 0.1", "- 0.1", "- 1.0", "- 10.", "- 100", _back};
     string[][] continent_cities = {
         new string[]{"Lagos", "Cairo", "Kinshasa", "Alexandria", "Abidjan", "Johannesburg", "Dar es Salaam", "Casablanca", "Cape Town", _back},
         new string[]{"Tokyo", "Jakarta", "Delhi", "Mumbai", "Seoul", "Shanghai", "Manila", "Karachi", "Beijing", _back},
         new string[]{"Sydney", "Melbourne", "Brisbane", "Perth", "Adelaide", "Canberra", "Hobart", "Darwin", "Outback", _back},
-        new string[]{"Istanbul", "Mow", "London", "Saint Petersburg", "Berlin", "Madrid", "Kyiv", "Rome", "Bucharest", _back},
+        new string[]{"Istanbul", "Moscow", "London", "Saint Petersburg", "Berlin", "Madrid", "Kyiv", "Rome", "Bucharest", _back},
         new string[]{"Mexico City", "New York", "Los Angeles", "Toronto", "Chicago", "Houston", "Havana", "Montreal", "Seattle", _back},
         new string[]{"Sao Paulo", "Lima", "Bogota", "Rio de Janeiro", "Santiago", "Caracas", "Buenos Aires", "Salvador", "Brasilia", _back}
     };
@@ -192,11 +188,10 @@ public class Launch : MonoBehaviour
         if (launch_timer > 0) {
             launch_timer += Time.deltaTime;
             print(launch_timer);
-            if (launch_timer > 4.5f) { SetButtons(_launched_menu); launch_timer = 0; map.GetComponent<AbstractMap>().UpdateMap(15); structure.gameObject.SetActive(true); structure.Launch(); return; }
-            map.GetComponent<AbstractMap>().UpdateMap(Mathf.Clamp(2 + 3f * Mathf.Round(launch_timer * 3f) / 3f, 2f, 14.9f));
+            if (launch_timer > 4.5f) { SetButtons(_launched_menu); launch_timer = 0; structure.gameObject.SetActive(true); structure.Launch(); return; }
         }
         if (about_timer < 30) {
-            about_timer += Time.deltaTime * 1.5f;// * GameObject.Find("Slider").GetComponent<Slider>().value;
+            about_timer += Time.deltaTime * 1f;// * GameObject.Find("Slider").GetComponent<Slider>().value;
             // if (about_timer > 073) { if (launched_flag == false) {  launched_flag = true; structure.transform.gameObject.SetActive(true); enemy.SetActive(true); enemy2.SetActive(true);  structure.Launch(); launching = true; structure.Launched = true; } map_camera.orthographicSize = Mathf.Clamp(100 - Mathf.Pow(Mathf.Round((float)(about_timer-073) * 15f) / 15f , 1.2f), 8, 100);  map.GetComponent<AbstractMap>().UpdateMap(15); }
             // else if (about_timer > 067) { map.GetComponent<AbstractMap>().UpdateMap(Mathf.Clamp(Mathf.Pow(Mathf.Round((float)(about_timer-065) * 15f) / 15f, 1.3f), 3f, 15.1f)); }
             About(Math.Round(about_timer));
@@ -248,31 +243,32 @@ public class Launch : MonoBehaviour
             case 00: view.text = "\n> <b>☄ BitNaughts</b> is\n    an educational\n    programming\n    video-game;";  break;
             case 01: view.text = "\n> ☄ BitNaughts is\n    an <b>educational</b>\n    programming\n    video-game;"; break;
             case 02: view.text = "\n> ☄ BitNaughts is\n    an educational\n    <b>programming</b>\n    video-game;";  break;
-            case 03: view.text = "\n> ☄ BitNaughts is\n    an educational\n    programming\n    <b>video-game</b>:\n\n> ▦ Design and\n  ◬ Code intelligent\n  △ Machines;"; break;
-            case 04: view.text = "\n> ☄ BitNaughts is\n    an educational\n    programming\n    video-game:\n\n> <b>▦ Design</b> and\n  ◬ Code intelligent\n  △ Machines;"; ButtonStyle(3, FontStyle.Bold); break;
-            case 05: view.text = "\n> ☄ BitNaughts is\n    an educational\n    programming\n    video-game:\n\n> ▦ Design and\n  <b>◬ Code</b> intelligent\n  △ Machines;"; ButtonStyle(4, FontStyle.Bold); Button(3, false); break;
-            case 06: view.text = "\n> ☄ BitNaughts is\n    an educational\n    programming\n    video-game:\n\n> ▦ Design and\n  ◬ Code <b>intelligent</b>\n  △ Machines;"; Button(4, false); break; 
-            case 07: view.text = "\n> ☄ BitNaughts is\n    an educational\n    programming\n    video-game:\n\n> ▦ Design and\n  ◬ Code intelligent\n  <b>△ Machines</b>:\n\n  <i>" + _load + "</i> an\n    Example;"; Button(0, false); ButtonStyle(1, FontStyle.Bold); break;
-            case 08: view.text = "\n> ☄ BitNaughts is\n    an educational\n    programming\n    video-game:\n\n> ▦ Design and\n  ◬ Code intelligent\n  △ Machines:\n\n  <b><i>" + _load + "</i></b> an\n    Example;"; Button(1, true); break;
-            case 09: view.text = "\n> ☄ BitNaughts is\n    an educational\n    programming\n    video-game:\n\n> ▦ Design and\n  ◬ Code intelligent\n  △ Machines:\n\n  " + _load + " an\n   <b> Example</b>;"; Button(1, false); break;
-            case 10: view.text = "\n> ☄ BitNaughts is\n    an educational\n    programming\n    video-game:\n\n> ▦ Design and\n  ◬ Code intelligent\n  △ Machines:\n\n  " + _load + " an\n    Example;"; once = false; break;
-            case 11: view.text = "\n> "; if (once == false) { once = true; StartCoroutine(GetRequest("https://bitnaughts.azurewebsites.net/api/Mainframe?code=" + code + "&name=s")); } break;
-            case 12: view.text = "\n> <b>△ Machines</b> are\n    designed with\n  ▢ Objects;"; break;   
-            case 13: view.text = "\n> △ Machines are\n    <b>designed</b> with\n  ▢ Objects;"; break;   
-            case 14: view.text = "\n> △ Machines are\n    designed with\n  <b>▢ Objects</b>;"; ButtonStyle(3, FontStyle.Bold); break;
-            case 15: view.text = "\n> △ Machines are\n    designed with\n  <b><i>▢ Objects</i></b>;"; Button(3, true); break; 
-            case 16: view.text = "\n> △ Machines are\n    designed with\n  ▢ Objects;"; Button(3, false); break; 
-            case 17: view.text = "\n> "; break;
-            case 18: view.text = "\n> <b>△ Machines</b> are\n    programmed with\n  ◬ Syntax;"; break;
-            case 19: view.text = "\n> △ Machines are\n    <b>programmed</b> with\n  ◬ Syntax;"; break;
-            case 20: view.text = "\n> △ Machines are\n    programmed with\n  <b>◬ Syntax</b>;"; ButtonStyle(4, FontStyle.Bold); break;
-            case 21: view.text = "\n> △ Machines are\n    programmed with\n  <b><i>◬ Syntax</i></b>;"; Button(4, true); break;
-            case 22: view.text = "\n> △ Machines are\n    programmed with\n  ◬ Syntax;"; Button(4, false); break;
-            case 23: view.text = "\n> "; break;
-            case 24: view.text = "\n> <b>" + _launch    + "</b> to see\n    it in action!\n"; ButtonStyle(9, FontStyle.Bold); break; 
-            case 25: view.text = "\n> <b><i>" + _launch    + "</i></b> to see\n    it in action!\n"; Button(9, true); break; 
-            case 26: view.text = "\n> " + _launch    + " to see\n    it in action!\n"; Button(9, false); break;                                           
-            case 27: view.text = "\n> "; break;
+            case 03: view.text = "\n> ☄ BitNaughts is\n    an educational\n    programming\n    <b>video-game</b>:\n\n> ▦ Design and\n  ◬ Code artificially\n    intelligent (A.I.)\n  △ Machines;"; break;
+            case 04: view.text = "\n> ☄ BitNaughts is\n    an educational\n    programming\n    video-game:\n\n> <b>▦ Design</b> and\n  ◬ Code artificially\n    intelligent (A.I.)\n  △ Machines;"; ButtonStyle(4, FontStyle.Bold); break;
+            case 05: view.text = "\n> ☄ BitNaughts is\n    an educational\n    programming\n    video-game:\n\n> ▦ Design and\n  <b>◬ Code</b> artificially\n    intelligent (A.I.)\n  △ Machines;"; ButtonStyle(5, FontStyle.Bold); Button(4, false); break;
+            case 06: view.text = "\n> ☄ BitNaughts is\n    an educational\n    programming\n    video-game:\n\n> ▦ Design and\n  ◬ Code <b>artificially</b>\n    intelligent (<b>A.</b>I.)\n  △ Machines;"; Button(5, false); break; 
+            case 07: view.text = "\n> ☄ BitNaughts is\n    an educational\n    programming\n    video-game:\n\n> ▦ Design and\n  ◬ Code artificially\n    <b>intelligent</b> (A.<b>I.</b>)\n  △ Machines;"; Button(0, false); break; 
+            case 08: view.text = "\n> ☄ BitNaughts is\n    an educational\n    programming\n    video-game:\n\n> ▦ Design and\n  ◬ Code artificially\n    intelligent (<b>A.I.</b>)\n  <b>△ Machines</b>:\n\n  " + _load + " an\n    Example;";  ButtonStyle(2, FontStyle.Bold); break;
+            case 09: view.text = "\n> ☄ BitNaughts is\n    an educational\n    programming\n    video-game:\n\n> ▦ Design and\n  ◬ Code artificially\n    intelligent (A.I.)\n  △ Machines:\n\n  <b>" + _load + "</b> an\n    Example;"; Button(2, true); once = false; break;
+            case 10: view.text = "\n> ☄ BitNaughts is\n    an educational\n    programming\n    video-game:\n\n> ▦ Design and\n  ◬ Code artificially\n    intelligent (A.I.)\n  △ Machines:\n\n  <b><i>" + _load + "</i></b> an\n   <b> Example</b>;"; Button(2, false); if (once == false) { once = true; StartCoroutine(GetRequest("https://bitnaughts.azurewebsites.net/api/Mainframe?code=" + code + "&name=s")); } break;
+            case 11: view.text = "\n> ☄ BitNaughts is\n    an educational\n    programming\n    video-game:\n\n> ▦ Design and\n  ◬ Code artificially\n    intelligent (A.I.)\n  △ Machines:\n\n  " + _load + " an\n    Example;"; break;
+            case 12: view.text = "\n> "; break;
+            case 13: view.text = "\n> <b>△ Machines</b> are\n    designed with\n  ▢ Objects;"; break;   
+            case 14: view.text = "\n> △ Machines are\n    <b>designed</b> with\n  ▢ Objects;"; break;   
+            case 15: view.text = "\n> △ Machines are\n    designed with\n  <b>▢ Objects</b>;"; ButtonStyle(4, FontStyle.Bold); break;
+            case 16: view.text = "\n> △ Machines are\n    designed with\n  <b><i>▢ Objects</i></b>;"; Button(4, true); break; 
+            case 17: view.text = "\n> △ Machines are\n    designed with\n  ▢ Objects;"; Button(4, false); break; 
+            case 18: view.text = "\n> "; break;
+            case 19: view.text = "\n> <b>△ Machines</b> are\n    programmed with\n  ◬ Syntax;"; break;
+            case 20: view.text = "\n> △ Machines are\n    <b>programmed</b> with\n  ◬ Syntax;"; break;
+            case 21: view.text = "\n> △ Machines are\n    programmed with\n  <b>◬ Syntax</b>;"; ButtonStyle(5, FontStyle.Bold); break;
+            case 22: view.text = "\n> △ Machines are\n    programmed with\n  <b><i>◬ Syntax</i></b>;"; Button(5, true); break;
+            case 23: view.text = "\n> △ Machines are\n    programmed with\n  ◬ Syntax;"; Button(5, false); break;
+            case 24: view.text = "\n> "; break;
+            case 25: view.text = "\n> <b>" + _launch    + "</b> to see\n    it in action!\n"; ButtonStyle(9, FontStyle.Bold); break; 
+            case 26: view.text = "\n> <b><i>" + _launch    + "</i></b> to see\n    it in action!\n"; Button(9, true); break; 
+            case 27: view.text = "\n> " + _launch    + " to see\n    it in action!\n"; Button(9, false); break;                                           
+            case 28: view.text = "\n> "; break;
         }
     }
 
@@ -310,21 +306,18 @@ public class Launch : MonoBehaviour
             switch (left_title.text)
             {
                 case _launch:
-                    ForwardGeocodeResource _resour = new ForwardGeocodeResource("");
-                    _resour.Query = input.text;
-                    MapboxAccess.Instance.Geocoder.Geocode(_resour, OnGeocode);
                     return;
             }
             if (registering) { author = input.text; registering = false; Design(); view.text += "\n\n> <i>" + author + "</i>\n  signed in;"; return; }
-            if (loading) {      Design();      view.text += "\n\n> <i>" + input.text + "</i>\n  loading...";      if (input.text != "") {          StartCoroutine(              GetRequest(                   "https://bitnaughts.azurewebsites.net/api/Mainframe" +                  "?code=" + code +                  "&name=" + input.text              )          );          loading = false;      }      return;  } // See "https://github.com/bitnaughts/bitnaughts.db/raw/master/" + input.text + ".txt"
-            if (saving) {  view.text += "\n\n> <i>" + input.text + "</i>\n  saving...";  if (input.text != "") {      StartCoroutine(          GetRequest(              "https://bitnaughts.azurewebsites.net/api/Mainframe" +              "?code=" + code +              "&author=" + author +              "&name=" + input.text +               "&data=" + structure.ToString()          )      );  }  return; } return;
+            if (loading) { Design(); view.text += "\n\n> <i>" + input.text + "</i>\n  loading...";      if (input.text != "") { StartCoroutine(              GetRequest(                   "https://bitnaughts.azurewebsites.net/api/Mainframe" +                  "?code=" + code +                  "&name=" + input.text              )          );          loading = false;      }      return;  } // See "https://github.com/bitnaughts/bitnaughts.db/raw/master/" + input.text + ".txt"
+            if (saving) { view.text += "\n\n> <i>" + input.text + "</i>\n  saving...";  if (input.text != "") { StartCoroutine(          GetRequest(              "https://bitnaughts.azurewebsites.net/api/Mainframe" +              "?code=" + code +              "&author=" + author +              "&name=" + input.text +               "&data=" + structure.ToString()          )      );  }  return; } return;
         }
         string button_text = buttons[id].transform.GetChild(1).GetComponent<Text>().text;
         print(button_text);
      
         switch (button_text) {
             case _zoom_in: if (map_camera.orthographicSize > 4) map_camera.orthographicSize/=2; return;
-            case _zoom_out: if (map_camera.orthographicSize < 64) map_camera.orthographicSize*=2; return;
+            case _zoom_out: if (map_camera.orthographicSize < 128) map_camera.orthographicSize*=2; return;
         }
      
         switch (left_title.text)
@@ -333,14 +326,14 @@ public class Launch : MonoBehaviour
                 buttons[id].transform.GetChild(0).gameObject.SetActive(true);
                 switch (button_text) {
                     case _about: about_timer = 0; return;
-                    case _leaderboard: return;
+                    case _campaign: left_title.text = _campaign; SetButtons(_missions_menu); view.text = "\n> <b>" + _campaign + "</b> teach\n    game mechanics\n    and computer\n    science principles;"; return;
                     case _objects: left_title.text = _objects; SetButtons(_objects_menu);  return;
                     case _syntax:  
                         var processors = structure.GetProcessorControllers();
                         switch (processors.Length) {
                             case 0: buttons[id].transform.GetChild(0).gameObject.SetActive(false); view.text = "\n  ▥ Processor needed;"; return;
-                            case 1: plotter.Select(processors[0]); return;
-                            default: left_title.text = _processor;  SetButtons(structure.GetProcessorControllers()); return;
+                            case 1: processor = structure.GetProcessorController(processors[0]); plotter.Select(processors[0]); Syntax(); return;
+                            default: left_title.text = _processor; SetButtons(structure.GetProcessorControllers()); return;
                         }
                         // return;
                     case _launch:  LaunchMenu(); map_camera.orthographicSize = 64; structure.gameObject.SetActive(false); return;
@@ -349,10 +342,25 @@ public class Launch : MonoBehaviour
                     case _load: if (loading) { Design(); return; } loading = true; view.text = "\n> <b>≛ Database</b>"; input.m_DialogTitle = "> Input a ship identifier;"; input.text = ""; placeholder.text = "≚"; input.gameObject.SetActive(true); return;
                     case _settings: left_title.text = _settings; SetButtons(settings_options); return;
                 } return;
+            case _campaign:
+                if (id == 9) { Design(); return; }
+                switch (button_text) {
+                    // case _logs:         view.text = "\n> <b>" + _logs + "</b> enable\n    monitoring of\n  △ Machines;\n\n  Challenge:\n    Build a\n  △ Machine with\n    at least\n    one of every\n  "+_objects+"!\n\nLesson:\n    Double-click\n    coming soon...";     return;
+                    // case _metrics:      view.text = "\n> <b>" + _metrics + "</b> enable\n    monitoring of\n  △ Machines;\n\n  Challenge:\n    Build a\n  △ Machine with\n    at least\n    one of every\n  "+_objects+"!\n\nLesson:\n    Double-click\n    coming soon...";         return;
+                    // case _syntax:       view.text = "\n> <b>" + _syntax + "</b> is\n    how we arrange\n    symbols into expressions;\n\n  Challenge:\n    Build a\n  △ Machine with\n    at least\n    one of every\n  "+_objects+"!\n\nLesson:\n    Double-click\n    coming soon...";    return;
+                    case _objects:      view.text = "\n> <b>" + _objects + "</b> are\n    building blocks of\n  △ Machines;\n\n  Challenge:\n    Build a\n  △ Machine with all\n  "+_objects+"!\n\nLesson:\n    Double-click\n    coming soon..."; return;
+                    case _objects2:     view.text = "\n> <b>" + _objects2 + "s</b> enable\n  " + _syntax +"\n    to control\n  " + _objects + ";\n\n  Challenge:\n    Build a\n  △ Machine that\n    controls all\n  "+_objects+"!\n\nLesson:\n    Double-click\n    coming soon...";   return;
+                    case _boolean:      view.text = "\n> <b>" + _boolean + "s</b> enable\n    discrete mathematics;\n\n  Challenge:\n    Build a\n  △ Machine that computes every boolean function!\n\nLesson:\n    Double-click\n    coming soon...";   return;
+                    case _arithmetic:   view.text = "\n> <b>" + _arithmetic + "</b> enables\n    analog computation;\n\n  Challenge:\n    Build a\n  △ Machine that computes every boolean function!\n\nLesson:\n    Double-click\n    coming soon...";    return;
+                    case _flow_control: view.text = "\n> <b>" + _flow_control + "</b> controls\n    code execution;\n\n  Challenge:\n    Build a\n  △ Machine that computes every boolean function!\n\nLesson:\n    Double-click\n    coming soon...";    return;
+                    case _trigonometry: view.text = "\n> <b>" + _trigonometry + "</b> enables\n    circular mathematics;\n\n  Challenge:\n    Build a\n  △ Machine that computes every boolean function!\n\nLesson:\n    Double-click\n    coming soon...";    return;
+                }
+                return;
             case _launch:
                 if (id == 8) { left_title.text = _settings; SetButtons(settings_options); return; }
                 if (id == 9) { Design(); map_zoom = 2; return; }
-                for (int i = 0; i < _launch_menu.Length; i++) if (button_text == _launch_menu[i]) { SetButtons(continent_cities[i]); map.GetComponent<AbstractMap>().UpdateMap(launch_locations[i], map_zoom); left_title.text = button_text;} return;
+                for (int i = 0; i < _launch_menu.Length; i++) if (button_text == _launch_menu[i]) { SetButtons(continent_cities[i]); 
+                 left_title.text = button_text;} return;
             case _monitor:
                 if (id == 9) { LaunchMenu(); map_zoom = 2; launching = false; return; }
                 switch (button_text) {
@@ -414,10 +422,10 @@ public class Launch : MonoBehaviour
                     case _delete:        processor.DeleteLine(); return;
                     case _add_below:     processor.AddLine(1);   return;
                     case _scroll_down:   processor.Scroll(1);    return;
-                    case _arithmetic:    left_title.text = _arithmetic;    SetButtons(_arthimetic_menu);    return; // Operation Categories
-                    case _flow_control:  left_title.text = _flow_control;  SetButtons(_flow_control_menu);  return;
-                    case _boolean:       left_title.text = _boolean;       SetButtons(_boolean_menu);       return;
-                    case _trigonometry:  left_title.text = _trigonometry;  SetButtons(_trigonometry_menu);  return;
+                    case _arithmetic:    left_title.text = _arithmetic;   SetButtons(_arthimetic_menu);   return; // Operation Categories
+                    case _flow_control:  left_title.text = _flow_control; SetButtons(_flow_control_menu); return;
+                    case _boolean:       left_title.text = _boolean;      SetButtons(_boolean_menu);      return;
+                    case _trigonometry:  left_title.text = _trigonometry; SetButtons(_trigonometry_menu); return;
                     case _objects2:      if (structure.GetInteractiveComponents().Length == 0) { buttons[id].transform.GetChild(0).gameObject.SetActive(false); view.text = "\n  ▢ Objects needed;"; return; } left_title.text = _objects2; number_operands++; processor.SetOperand("obj"); SetButtons(structure.GetInteractiveComponents()); return;
                 } return;
             case _arithmetic:
@@ -428,8 +436,18 @@ public class Launch : MonoBehaviour
                 switch (button_text) {
                     case _back:    Syntax();                              return;
                     case _enter:   SelectOperand();                       return;
+                    // case _add: processor.SetOperand("add"); return;
+                    // case _subtract: processor.SetOperand("sub"); return;
+                    // case _absolute: processor.SetOperand("abs"); return;
+                    // case _multiply: processor.SetOperand("mul"); return;
+                    // case _divide: processor.SetOperand("div"); return;
+                    // case _modulo: processor.SetOperand("mod"); return;
+                    // case _exponential: processor.SetOperand("exp"); return;
+                    // case _root: processor.SetOperand("roo"); return;
+
+
                     case _jump:   processor.SetOperand("jum"); SetButtons(processor.GetLabels()); return;
-                    case _jumpLabel: input.gameObject.SetActive(true); input.text = ""; placeholder.text = _jumpLabel; return;
+                    case _jumpLabel: input.gameObject.SetActive(true); input.text = ""; placeholder.text = _jumpLabel; SetButtons(_jump_label_menu); return;
                     case "+ 100": processor.ModifyConstantOperand(100);   return;
                     case "- 100": processor.ModifyConstantOperand(-100);  return;
                     case "+ 10.":  processor.ModifyConstantOperand(10);   return;         
@@ -441,11 +459,12 @@ public class Launch : MonoBehaviour
                     case _variable: SetButtons(processor.GetVariables()); return;
                     case _random: processor.AddOperand(" rnd"); Syntax(); return;
                     case _constant: processor.AddOperand(" 0"); SetButtons(_constant_menu); return;
-                    case _set: operation_button = _set;  number_operands += 2; processor.SetOperand("set"); input.gameObject.SetActive(true); input.text = ""; placeholder.text = _variable; SetButtons(_variable_menu); return;
-                    default: if (structure.IsComponent(button_text)) { processor.AddOperand(" " + button_text); SelectOperand(); return; } if (processor.IsVariable(button_text)) { processor.AddOperand(" " + button_text); SelectOperand(); return; } if (processor.IsLabel(button_text)) { processor.AddOperand(" " + button_text); Syntax(); return; } number_operands++; processor.SetOperand(Interpreter.GetTextCode(button_text)); SetButtons(processor.GetVariables()); return;
+                    case _set: operation_button = _set;  number_operands += 2; processor.SetOperand("set"); input.gameObject.SetActive(true); input.text = "a"; placeholder.text = _variable; SetButtons(_variable_menu); return;
+                    case _ok: processor.AddOperand(" " + input.text); input.gameObject.SetActive(false); SetButtons(_operand_menu); return;
+                    default: if (structure.IsComponent(button_text)) { processor.AddOperand(" " + button_text); SelectOperand(); return; } if (processor.IsVariable(button_text)) { processor.AddOperand(" " + button_text); SelectOperand(); return; } if (processor.IsLabel(button_text)) { processor.AddOperand(" " + button_text); Syntax(); return; }
+                             number_operands++; processor.SetOperand(Interpreter.GetTextCode(button_text)); SetButtons(processor.GetVariables()); return;
                 }
             case _metrics:  if (id == 9) { Design(); return; } return;
-            default: left_title.text = _monitor; launch_timer = 1f; right_title.text = "✵ " + button_text;ForwardGeocodeResource _resource = new ForwardGeocodeResource(""); _resource.Query = button_text; MapboxAccess.Instance.Geocoder.Geocode(_resource, OnGeocode); return;
         }
     }
     public void LaunchMenu() {
@@ -464,15 +483,6 @@ public class Launch : MonoBehaviour
         EnableGameObject("37", false);
         plotter.GetComponent<SpriteRenderer>().enabled = false;
         SetButtons(_launch_menu);
-    }
-    public void OnGeocode(ForwardGeocodeResponse res) {
-        if (null == res) { }
-        else if (null != res.Features && res.Features.Count > 0)
-        {
-            structure.Pos = res.Features[0].Center;
-            map.GetComponent<AbstractMap>().UpdateMap(res.Features[0].Center);
-            // SetButtons(_launched_menu);
-        }
     }
 
     public void OnClick() {
