@@ -52,3 +52,11 @@ Logs/AssetImportWorker1-prev.log
 Logs/AssetImportWorker0.log
 Logs/AssetImportWorker0-prev.log
 Logs/ApiUpdaterCheck.txt
+Assets/Deluxe Primitives/*
+Assets/Textures/*
+Assets/Shaders/*
+Assets/Scripts/*
+Assets/Scenes/*
+Assets/Resources/*
+Assets/Prefabs/*
+Assets/Materials/*
